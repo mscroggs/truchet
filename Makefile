@@ -18,4 +18,4 @@ doc:
 	mkdir -p $(TEXOUT);pdflatex -output-directory=$(TEXOUT) truchet.dtx
 
 zip:
-	mkdir -p $(OUTPUT);rm -rf $(MYTMP);mkdir -p $(MYTMP)/zip/$(THIS);cd $(MYTMP)/zip;cp -r $(HERE)/hats $(THIS);cp -r $(HERE)/readme_images $(THIS);cp $(HERE)/README.md $(TEXOUT)/truchet.pdf $(HERE)/truchet.dtx $(HERE)/truchet.ins $(THIS);zip -r truchet .;cp truchet.zip $(OUTPUT)
+	mkdir -p $(OUTPUT);rm -rf $(MYTMP);mkdir -p $(MYTMP)/zip/$(THIS);cd $(MYTMP)/zip;cp $(HERE)/README.md $(TEXOUT)/truchet.pdf $(HERE)/truchet.dtx $(HERE)/truchet.ins $(THIS);zip -r truchet .;cp truchet.zip $(OUTPUT)

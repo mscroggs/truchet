@@ -1,5 +1,5 @@
 %\iffalse meta-comment
-%Copyright (c) 2018 Matthew Scroggs & Adam Townsend
+%Copyright (c) 2018 Matthew Scroggs
 %
 %Permission is hereby granted, free of charge, to any person obtaining a copy
 %of this software and associated documentation files (the "Software"), to deal
@@ -20,108 +20,284 @@
 %SOFTWARE.
 %\fi
 
-%\lstinline{truchet} is a package for \LaTeX{} that makes the \lstinline{\hat} put real hats on symbols.
-%For example, the input \lstinline@\hat{a}=\hat{b}@ will produce the output:
-%\[\hat{a}=\hat{b}\]
-%To make a vector with a hat, the input \lstinline@\hat{\mathbf{a}}@ produces:
-%\[\hat{\mathbf{a}}\]
-%
-%The command \lstinline{\hat} will choose a hat randomly from six hats:
-%\begin{itemize}
-%\item \(\hatn{a}{0}\) - A beret
-%\item \(\hatn{a}{1}\) - A Santa hat
-%\item \(\hatn{a}{2}\) - A Scottish hat
-%\item \(\hatn{a}{3}\) - A sombrero
-%\item \(\hatn{a}{4}\) - A wizard's hat
-%\item \(\hatn{a}{5}\) - A top hat
-%\end{itemize}
-%
-%Variables can be given a non-random hat, using the command \lstinline{\hatn}:
-%\begin{itemize}
-%\item \lstinline@\hatn{a}{0}@ produces \(\hatn{a}{0}\)
-%\item \lstinline@\hatn{a}{1}@ produces \(\hatn{a}{1}\)
-%\item \lstinline@\hatn{a}{2}@ produces \(\hatn{a}{2}\)
-%\item \lstinline@\hatn{a}{3}@ produces \(\hatn{a}{3}\)
-%\item \lstinline@\hatn{a}{4}@ produces \(\hatn{a}{4}\)
-%\item \lstinline@\hatn{a}{5}@ produces \(\hatn{a}{5}\)
-%\end{itemize}
-%
+% \lstinline{truchet} is a package for \LaTeX{} that draws Truchet tiles,
+% as features in the article \emph{Too good to be Truchet} by Colin Beveridge (Chalkdust issue 08,
+% \url{http://chalkdustmagazine.com/features/too-good-to-be-truchet/}).
 %\iffalse
 %<*documentation>
 \documentclass{article}
 \usepackage{truchet}
 \usepackage{doc}
 \usepackage{listings}
-\lstset{basicstyle=\ttfamily\footnotesize,commentstyle=\color{white},language=TeX}
+\usepackage{url}
+\usepackage{hyperref}
+\lstset{basicstyle=\ttfamily\footnotesize,commentstyle=\color{red},language=[LaTeX]TeX}
 \title{truchet v\input{VERSION}}
-\author{Matthew W.~Scroggs \& Adam K.~Townsend}
+\author{Matthew W.~Scroggs}
 \begin{document}
 \maketitle
     \DocInput{truchet.dtx}
 \end{document}
 %</documentation>
 %\fi
-
+%
 %\iffalse
 %<*truchet>
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesPackage{truchet}[2019/02/02 truchet]
+\ProvidesPackage{truchet}[2019/02/12 truchet]
 
 \RequirePackage{tikz}
+\RequirePackage{ifthen}
+%\fi
+% \DescribeEnv{tikz-truchet}
+% The environment \lstinline{tikz-truchet} is a \lstinline{tikzpicture} that is centred, has small text and the options
+% \lstinline{[line cap=round,line join=round]}. The options \lstinline{x} and \lstinline{y} can be set by passing a value to the
+% environment in square brackets.
+%\iffalse
+\newenvironment{tikz-truchet}[1][2cm]{
+    \begin{center}
+        \begin{tikzpicture}[line cap=round,line join=round,x=#1,y=#1]
+            \begin{small}
+}{
+            \end{small}
+        \end{tikzpicture}
+    \end{center}
+}
+%\fi
+% \section{Squares}
+% \DescribeMacro{\truchetsquare}
+% You can draw square Truchet tile using the command \lstinline{\truchetsquare}.
+% The following code will produce the output below.
+% \iffalse
+%<*example>
+% \fi
+\begin{lstlisting}
+\begin{tikz-truchet}
+  \truchetsquare{b}{w}{b}{w}{b}
+\end{tikz-truchet}
+\end{lstlisting}
+% \iffalse
+%</example>
+% \fi
+% \begin{tikz-truchet}
+%   \truchetsquare{b}{w}{b}{w}{b}
+% \end{tikz-truchet}
+% The five inputs of the command are the colour (\lstinline{b} or \lstinline{w}) at the centre, the North East, North West, South West,
+% and South East corners (in that order)
+%
+% You can a square bracketed input to move the tiles. The tiles are 1 unit wide.
+% \iffalse
+%<*example>
+% \fi
+\begin{lstlisting}
+\begin{tikz-truchet}
+  \truchetsquare{b}{w}{b}{w}{b}
+  \truchetsquare[(1.2,0)]{w}{b}{w}{b}{w}
+  \truchetsquare[(0,-1.2)]{b}{b}{w}{b}{w}
+  \truchetsquare[(1.2,-1.2)]{w}{w}{b}{w}{b}
+\end{tikz-truchet}
+\end{lstlisting}
+% \iffalse
+%</example>
+% \fi
+% \begin{tikz-truchet}
+%   \truchetsquare{b}{w}{b}{w}{b}
+%   \truchetsquare[(1.2,0)]{w}{b}{w}{b}{w}
+%   \truchetsquare[(0,-1.2)]{b}{b}{w}{b}{w}
+%   \truchetsquare[(1.2,-1.2)]{w}{w}{b}{w}{b}
+% \end{tikz-truchet}
+%
+%\iffalse
+\newcommand{\truchetsquare}[6][(0,0)]{
+  \begin{scope}[shift={#1}]
+    \ifthenelse{\equal{#2}{b}}{
+        \draw[black,fill=black] (0,0) rectangle (1,1);
+    }{
+        \draw[white,fill=white] (0,0) rectangle (1,1);
+    }
+    \ifthenelse{\equal{#3}{#2}}{}{
+        \ifthenelse{\equal{#3}{b}}{
+            \draw [black,fill=black,domain=0:90,line width=1pt] plot ({0.5*cos(\x)}, {1-0.5*sin(\x)}) -- (0,1) -- cycle;
+        }{
+            \draw [white,fill=white,domain=0:90,line width=1pt] plot ({0.5*cos(\x)}, {1-0.5*sin(\x)}) -- (0,1) -- cycle;
+        }
+    }
+    \ifthenelse{\equal{#4}{#2}}{}{
+        \ifthenelse{\equal{#4}{b}}{
+            \draw [black,fill=black,domain=0:90,line width=1pt] plot ({1-0.5*cos(\x)}, {1-0.5*sin(\x)}) -- (1,1) -- cycle;
+        }{
+            \draw [white,fill=white,domain=0:90,line width=1pt] plot ({1-0.5*cos(\x)}, {1-0.5*sin(\x)}) -- (1,1) -- cycle;
+        }
+    }
+    \ifthenelse{\equal{#5}{#2}}{}{
+        \ifthenelse{\equal{#5}{b}}{
+            \draw [black,fill=black,domain=0:90,line width=1pt] plot ({1-0.5*cos(\x)}, {0.5*sin(\x)}) -- (1,0) -- cycle;
+        }{
+            \draw [white,fill=white,domain=0:90,line width=1pt] plot ({1-0.5*cos(\x)}, {0.5*sin(\x)}) -- (1,0) -- cycle;
+        }
+    }
+    \ifthenelse{\equal{#6}{#2}}{}{
+        \ifthenelse{\equal{#6}{b}}{
+            \draw [black,fill=black,domain=0:90,line width=1pt] plot ({0.5*cos(\x)}, {0.5*sin(\x)}) -- (0,0) -- cycle;
+        }{
+            \draw [white,fill=white,domain=0:90,line width=1pt] plot ({0.5*cos(\x)}, {0.5*sin(\x)}) -- (0,0) -- cycle;
+        }
+    }
+    \draw[black,line width=1pt] (0,0) rectangle (1,1);
+  \end{scope}
+}
+%\fi 
+% 
+% \DescribeMacro{\diagonalsquare}
+% The command \lstinline{\diagonalsquare} can be used to draw a square tile that is half white and half black along a diagonal.
+% \iffalse
+%<*example>
+% \fi
+\begin{lstlisting}
+\begin{tikz-truchet}
+  \diagonalsquare{x}{w}{x}{b}
+\end{tikz-truchet}
+\end{lstlisting}
+% \iffalse
+%</example>
+% \fi 
+% \begin{tikz-truchet}
+% \diagonalsquare{x}{w}{x}{b}
+% \end{tikz-truchet}
+% The four inputs are the color (\lstinline{w} or \lstinline{b}), or \lstinline{x} if the colour changes at that corner, of
+% the North East, North West, South West, and South East corners (in that order).
+%
+% \DescribeMacro{\tileA}
+% \DescribeMacro{\tileB}
+% \DescribeMacro{\tileC}
+% \DescribeMacro{\tileD}
+% There are only five such tiles. They can be created using the convenience functions
+% \lstinline{\tileA},
+% \lstinline{\tileB},
+% \lstinline{\tileC}, and
+% \lstinline{\tileD}.
+% \iffalse
+%<*example>
+% \fi
+\begin{lstlisting}
+\begin{tikz-truchet}
+  \tileA
+  \tileB[(1.2,0)]
+  \tileC[(2.4,0)]
+  \tileD[(3.6,0)]
+\end{tikz-truchet}
+\end{lstlisting}
+%\iffalse
+%</example>
+%\fi 
+% \begin{tikz-truchet}
+%  \tileA
+%  \tileB[(1.2,0)]
+%  \tileC[(2.4,0)]
+%  \tileD[(3.6,0)]
+% \end{tikz-truchet}
+% 
+%\iffalse
+\newcommand{\diagonalsquare}[5][(0,0)]{
+  \begin{scope}[shift={#1}]
+    \draw[white,fill=white] (0,0) rectangle (1,1);
+    \ifthenelse{\equal{#2}{b}}{
+        \draw [black,fill=black,line width=1pt] (0,0) -- (0,1) -- (1,1) -- cycle;
+    }{}
+    \ifthenelse{\equal{#3}{b}}{
+        \draw [black,fill=black,line width=1pt] (0,1) -- (1,1) -- (1,0) -- cycle;
+    }{}
+    \ifthenelse{\equal{#4}{b}}{
+        \draw [black,fill=black,line width=1pt] (1,1) -- (1,0) -- (0,0) -- cycle;
+    }{}
+    \ifthenelse{\equal{#5}{b}}{
+        \draw [black,fill=black,line width=1pt] (1,0) -- (0,0) -- (0,1) -- cycle;
+    }{}
+    \draw[black,line width=1pt] (0,0) rectangle (1,1);
+  \end{scope}
+}
 
-\newenvironment{rotatehex}[1]
-{\begin{scope}[shift={(0.5,0.866)}]\begin{scope}[rotate=#1]\begin{scope}[shift={(-0.5,-0.866)}]}
-{\end{scope}\end{scope}\end{scope}}
-\newenvironment{rotateoct}[1]
-{\begin{scope}[shift={(0.5,1.207)}]\begin{scope}[rotate=#1]\begin{scope}[shift={(-0.5,-1.207)}]}
-{\end{scope}\end{scope}\end{scope}}
-\newenvironment{rotatedec}[1]
-{\begin{scope}[shift={(0.5,1.5388417685876261)}]\begin{scope}[rotate=#1]\begin{scope}[shift={(-0.5,-1.5388417685876261)}]}
-{\end{scope}\end{scope}\end{scope}}
+\newcommand{\tileA}[1][(0,0)]{\diagonalsquare[#1]{x}{w}{x}{b}}
+\newcommand{\tileB}[1][(0,0)]{\diagonalsquare[#1]{b}{x}{w}{x}}
+\newcommand{\tileC}[1][(0,0)]{\diagonalsquare[#1]{x}{b}{x}{w}}
+\newcommand{\tileD}[1][(0,0)]{\diagonalsquare[#1]{w}{x}{b}{x}}
+
+%\fi
+%
+%\iffalse
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Everything following this has not been tided or documented yet... %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newenvironment{rotatehex}[1]{
+    \begin{scope}[shift={(0.5,0.866)}]
+        \begin{scope}[rotate=#1]
+            \begin{scope}[shift={(-0.5,-0.866)}]
+}{
+            \end{scope}
+        \end{scope}
+    \end{scope}
+}
+
+\newenvironment{rotateoct}[1]{
+    \begin{scope}[shift={(0.5,1.207)}]
+        \begin{scope}[rotate=#1]
+            \begin{scope}[shift={(-0.5,-1.207)}]
+}{
+            \end{scope}
+        \end{scope}
+    \end{scope}
+}
+
+\newenvironment{rotatedec}[1]{
+    \begin{scope}[shift={(0.5,1.5388417685876261)}]
+        \begin{scope}[rotate=#1]
+            \begin{scope}[shift={(-0.5,-1.5388417685876261)}]
+}{
+            \end{scope}
+        \end{scope}
+    \end{scope}
+}
 
 
 \newcommand{\truchetcube}[6]{
-%1.17,0.22
-%-0.38,0.67
-\coordinate (A) at (0,0);
-\coordinate (B) at (1.17,0.22);
-\coordinate (C) at (0.57,0.84);
-\coordinate (D) at (-0.6,0.62);
-\coordinate (E) at (0,1);
-\coordinate (F) at (1.17,1.22);
-\coordinate (G) at (0.57,1.84);
-\coordinate (H) at (-0.6,1.62);
-%faces
-\ifthenelse{\equal{#1}{b}}
-{\fill[fill=black,fill opacity=0.6] (A) -- (B) -- (C) -- (D) -- cycle;}
-{\fill[fill=white,fill opacity=0.6] (A) -- (B) -- (C) -- (D) -- cycle;}
-\ifthenelse{\equal{#2}{b}}
-{\fill[fill=black,fill opacity=0.6] (A) -- (B) -- (F) -- (E) -- cycle;}
-{\fill[fill=white,fill opacity=0.6] (A) -- (B) -- (F) -- (E) -- cycle;}
-\ifthenelse{\equal{#3}{b}}
-{\fill[fill=black,fill opacity=0.6] (B) -- (C) -- (G) -- (F) -- cycle;}
-{\fill[fill=white,fill opacity=0.6] (B) -- (C) -- (G) -- (F) -- cycle;}
-\ifthenelse{\equal{#4}{b}}
-{\fill[fill=black,fill opacity=0.6] (C) -- (D) -- (H) -- (G) -- cycle;}
-{\fill[fill=white,fill opacity=0.6] (C) -- (D) -- (H) -- (G) -- cycle;}
-\ifthenelse{\equal{#5}{b}}
-{\fill[fill=black,fill opacity=0.6] (D) -- (A) -- (E) -- (H) -- cycle;}
-{\fill[fill=white,fill opacity=0.6] (D) -- (A) -- (E) -- (H) -- cycle;}
-\ifthenelse{\equal{#6}{b}}
-{\fill[fill=black,fill opacity=0.6] (E) -- (F) -- (G) -- (H) -- cycle;}
-{\fill[fill=white,fill opacity=0.6] (E) -- (F) -- (G) -- (H) -- cycle;}
-%edges
-\draw[black,line width=1pt] (A) -- (B) -- (C) -- (D) -- cycle;
-\draw[black,line width=1pt] (E) -- (F) -- (G) -- (H) -- cycle;
-\draw[black,line width=1pt] (A) -- (E);
-\draw[black,line width=1pt] (B) -- (F);
-\draw[black,line width=1pt] (C) -- (G);
-\draw[black,line width=1pt] (D) -- (H);
+    %1.17,0.22
+    %-0.38,0.67
+    \coordinate (A) at (0,0);
+    \coordinate (B) at (1.17,0.22);
+    \coordinate (C) at (0.57,0.84);
+    \coordinate (D) at (-0.6,0.62);
+    \coordinate (E) at (0,1);
+    \coordinate (F) at (1.17,1.22);
+    \coordinate (G) at (0.57,1.84);
+    \coordinate (H) at (-0.6,1.62);
+    %faces
+    \ifthenelse{\equal{#1}{b}}
+    {\fill[fill=black,fill opacity=0.6] (A) -- (B) -- (C) -- (D) -- cycle;}
+    {\fill[fill=white,fill opacity=0.6] (A) -- (B) -- (C) -- (D) -- cycle;}
+    \ifthenelse{\equal{#2}{b}}
+    {\fill[fill=black,fill opacity=0.6] (A) -- (B) -- (F) -- (E) -- cycle;}
+    {\fill[fill=white,fill opacity=0.6] (A) -- (B) -- (F) -- (E) -- cycle;}
+    \ifthenelse{\equal{#3}{b}}
+    {\fill[fill=black,fill opacity=0.6] (B) -- (C) -- (G) -- (F) -- cycle;}
+    {\fill[fill=white,fill opacity=0.6] (B) -- (C) -- (G) -- (F) -- cycle;}
+    \ifthenelse{\equal{#4}{b}}
+    {\fill[fill=black,fill opacity=0.6] (C) -- (D) -- (H) -- (G) -- cycle;}
+    {\fill[fill=white,fill opacity=0.6] (C) -- (D) -- (H) -- (G) -- cycle;}
+    \ifthenelse{\equal{#5}{b}}
+    {\fill[fill=black,fill opacity=0.6] (D) -- (A) -- (E) -- (H) -- cycle;}
+    {\fill[fill=white,fill opacity=0.6] (D) -- (A) -- (E) -- (H) -- cycle;}
+    \ifthenelse{\equal{#6}{b}}
+    {\fill[fill=black,fill opacity=0.6] (E) -- (F) -- (G) -- (H) -- cycle;}
+    {\fill[fill=white,fill opacity=0.6] (E) -- (F) -- (G) -- (H) -- cycle;}
+    %edges
+    \draw[black,line width=1pt] (A) -- (B) -- (C) -- (D) -- cycle;
+    \draw[black,line width=1pt] (E) -- (F) -- (G) -- (H) -- cycle;
+    \draw[black,line width=1pt] (A) -- (E);
+    \draw[black,line width=1pt] (B) -- (F);
+    \draw[black,line width=1pt] (C) -- (G);
+    \draw[black,line width=1pt] (D) -- (H);
 }
-\newenvironment{tikz-truchet}[1][2cm]{
-\begin{center}\begin{tikzpicture}[line cap=round,line join=round,x=#1,y=#1]
-\begin{small}
-}{\end{small}\end{tikzpicture}\end{center}}
 
 \newcommand{\octfill}[1][black]{\draw[#1,fill=#1] (0,0) -- (1,0) -- (1.707,0.707) -- (1.707,1.707) -- (1,2.414) -- (0,2.414) -- (-0.707,1.707) -- (-0.707,0.707) -- cycle;}
 \newcommand{\octoutline}[1][black]{\draw[#1,line width=1pt] (0,0) -- (1,0) -- (1.707,0.707) -- (1.707,1.707) -- (1,2.414) -- (0,2.414) -- (-0.707,1.707) -- (-0.707,0.707) -- cycle;}
@@ -204,63 +380,6 @@
 }}
 \draw[black,line width=1pt] (0,0) -- (1,0) -- (1.5,0.866) -- (1,1.732) -- (0,1.732) -- (-0.5,0.866) -- cycle;
 }
-
-\newcommand{\truchetsquare}[5]{
-\ifthenelse{\equal{#1}{b}}{
-    \draw[black,fill=black] (0,0) rectangle (1,1);
-}{
-    \draw[white,fill=white] (0,0) rectangle (1,1);
-}
-\ifthenelse{\equal{#2}{#1}}{}{
-\ifthenelse{\equal{#2}{b}}{
-    \draw [black,fill=black,domain=0:90,line width=1pt] plot ({0.5*cos(\x)}, {1-0.5*sin(\x)}) -- (0,1) -- cycle;
-}{
-    \draw [white,fill=white,domain=0:90,line width=1pt] plot ({0.5*cos(\x)}, {1-0.5*sin(\x)}) -- (0,1) -- cycle;
-}}
-\ifthenelse{\equal{#3}{#1}}{}{
-\ifthenelse{\equal{#3}{b}}{
-    \draw [black,fill=black,domain=0:90,line width=1pt] plot ({1-0.5*cos(\x)}, {1-0.5*sin(\x)}) -- (1,1) -- cycle;
-}{
-    \draw [white,fill=white,domain=0:90,line width=1pt] plot ({1-0.5*cos(\x)}, {1-0.5*sin(\x)}) -- (1,1) -- cycle;
-}}
-\ifthenelse{\equal{#4}{#1}}{}{
-\ifthenelse{\equal{#4}{b}}{
-    \draw [black,fill=black,domain=0:90,line width=1pt] plot ({1-0.5*cos(\x)}, {0.5*sin(\x)}) -- (1,0) -- cycle;
-}{
-    \draw [white,fill=white,domain=0:90,line width=1pt] plot ({1-0.5*cos(\x)}, {0.5*sin(\x)}) -- (1,0) -- cycle;
-}}
-\ifthenelse{\equal{#5}{#1}}{}{
-\ifthenelse{\equal{#5}{b}}{
-    \draw [black,fill=black,domain=0:90,line width=1pt] plot ({0.5*cos(\x)}, {0.5*sin(\x)}) -- (0,0) -- cycle;
-}{
-    \draw [white,fill=white,domain=0:90,line width=1pt] plot ({0.5*cos(\x)}, {0.5*sin(\x)}) -- (0,0) -- cycle;
-}}
-
-\draw[black,line width=1pt] (0,0) rectangle (1,1);
-}
-
-\newcommand{\diagonalsquare}[4]{
-    \draw[white,fill=white] (0,0) rectangle (1,1);
-\ifthenelse{\equal{#1}{b}}{
-    \draw [black,fill=black,line width=1pt] (0,0) -- (0,1) -- (1,1) -- cycle;
-}{}
-\ifthenelse{\equal{#2}{b}}{
-    \draw [black,fill=black,line width=1pt] (0,1) -- (1,1) -- (1,0) -- cycle;
-}{}
-\ifthenelse{\equal{#3}{b}}{
-    \draw [black,fill=black,line width=1pt] (1,1) -- (1,0) -- (0,0) -- cycle;
-}{}
-\ifthenelse{\equal{#4}{b}}{
-    \draw [black,fill=black,line width=1pt] (1,0) -- (0,0) -- (0,1) -- cycle;
-}{}
-
-\draw[black,line width=1pt] (0,0) rectangle (1,1);
-}
-
-\newcommand{\tileA}{\diagonalsquare{x}{w}{x}{b}}
-\newcommand{\tileB}{\diagonalsquare{b}{x}{w}{x}}
-\newcommand{\tileC}{\diagonalsquare{x}{b}{x}{w}}
-\newcommand{\tileD}{\diagonalsquare{w}{x}{b}{x}}
 
 %</truchet>
 %\fi
