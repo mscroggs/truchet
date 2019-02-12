@@ -161,7 +161,7 @@
 % \diagonalsquare{x}{w}{x}{b}
 % \end{tikzpicture}
 % \end{center}
-% The four inputs are the color (\lstinline{w} or \lstinline{b}), or \lstinline{x} if the colour changes at that corner, of
+% The four inputs are the color (\lstinline{b} or \lstinline{w}), or \lstinline{x} if the colour changes at that corner, of
 % the North East, North West, South West, and South East corners (in that order).
 %
 % \DescribeMacro{\tileA}
@@ -432,12 +432,37 @@
     \end{scope}
 }
 
+%\fi
 %
 % \section{Cubes}
-% 
+% \DescribeMacro{\truchetcube}
+% The command \lstinline{\truchetcube} can be used to draw Cubes with differently coloured faces.
+% The six inputs of the command are the colour (\lstinline{b} or \lstinline{w}) of the
+% bottom, front, right, back, left, and top faces of the cube (in that order).
+%\iffalse
+%<*example>
+%\fi
+\begin{lstlisting}
+\begin{tikzpicture}[x=1.2cm,y=1.2cm]
+\truchetcube{w}{w}{w}{w}{w}{w}
+\truchetcube[(0,-3cm)]{b}{b}{b}{b}{b}{b}
+\truchetcube[(2.4cm,0)]{w}{w}{w}{w}{w}{b}
+\truchetcube[(2.4cm,-3cm)]{b}{b}{b}{b}{b}{w}
+\end{tikzpicture}
+\end{lstlisting}
+%\iffalse
+%</example>
+%\fi 
+% \begin{tikzpicture}[x=1.2cm,y=1.2cm]
+% \truchetcube{w}{w}{w}{w}{w}{w}
+% \truchetcube[(0,-3cm)]{b}{b}{b}{b}{b}{b}
+% \truchetcube[(2.4cm,0)]{w}{w}{w}{w}{w}{b}
+% \truchetcube[(2.4cm,-3cm)]{b}{b}{b}{b}{b}{w}
+% \end{tikzpicture}
+%\iffalse
 
-
-\newcommand{\truchetcube}[6]{
+\newcommand{\truchetcube}[7][(0,0)]{
+  \begin{scope}[shift={#1}]
     %1.17,0.22
     %-0.38,0.67
     \coordinate (A) at (0,0);
@@ -449,22 +474,22 @@
     \coordinate (G) at (0.57,1.84);
     \coordinate (H) at (-0.6,1.62);
     %faces
-    \ifthenelse{\equal{#1}{b}}
+    \ifthenelse{\equal{#2}{b}}
     {\fill[fill=black,fill opacity=0.6] (A) -- (B) -- (C) -- (D) -- cycle;}
     {\fill[fill=white,fill opacity=0.6] (A) -- (B) -- (C) -- (D) -- cycle;}
-    \ifthenelse{\equal{#2}{b}}
+    \ifthenelse{\equal{#3}{b}}
     {\fill[fill=black,fill opacity=0.6] (A) -- (B) -- (F) -- (E) -- cycle;}
     {\fill[fill=white,fill opacity=0.6] (A) -- (B) -- (F) -- (E) -- cycle;}
-    \ifthenelse{\equal{#3}{b}}
+    \ifthenelse{\equal{#4}{b}}
     {\fill[fill=black,fill opacity=0.6] (B) -- (C) -- (G) -- (F) -- cycle;}
     {\fill[fill=white,fill opacity=0.6] (B) -- (C) -- (G) -- (F) -- cycle;}
-    \ifthenelse{\equal{#4}{b}}
+    \ifthenelse{\equal{#5}{b}}
     {\fill[fill=black,fill opacity=0.6] (C) -- (D) -- (H) -- (G) -- cycle;}
     {\fill[fill=white,fill opacity=0.6] (C) -- (D) -- (H) -- (G) -- cycle;}
-    \ifthenelse{\equal{#5}{b}}
+    \ifthenelse{\equal{#6}{b}}
     {\fill[fill=black,fill opacity=0.6] (D) -- (A) -- (E) -- (H) -- cycle;}
     {\fill[fill=white,fill opacity=0.6] (D) -- (A) -- (E) -- (H) -- cycle;}
-    \ifthenelse{\equal{#6}{b}}
+    \ifthenelse{\equal{#7}{b}}
     {\fill[fill=black,fill opacity=0.6] (E) -- (F) -- (G) -- (H) -- cycle;}
     {\fill[fill=white,fill opacity=0.6] (E) -- (F) -- (G) -- (H) -- cycle;}
     %edges
@@ -474,6 +499,7 @@
     \draw[black,line width=1pt] (B) -- (F);
     \draw[black,line width=1pt] (C) -- (G);
     \draw[black,line width=1pt] (D) -- (H);
+  \end{scope}
 }
 
 %</truchet>
