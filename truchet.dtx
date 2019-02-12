@@ -68,17 +68,17 @@
 % \DescribeMacro{\truchetsquare}
 % You can draw square Truchet tile using the command \lstinline{\truchetsquare}.
 % The following code will produce the output below.
-% \iffalse
+%\iffalse
 %<*example>
-% \fi
+%\fi
 \begin{lstlisting}
 \begin{tikz-truchet}
   \truchetsquare{b}{w}{b}{w}{b}
 \end{tikz-truchet}
 \end{lstlisting}
-% \iffalse
+%\iffalse
 %</example>
-% \fi
+%\fi
 % \begin{tikz-truchet}
 %   \truchetsquare{b}{w}{b}{w}{b}
 % \end{tikz-truchet}
@@ -86,9 +86,9 @@
 % and South East corners (in that order)
 %
 % You can a square bracketed input to move the tiles. The tiles are 1 unit wide.
-% \iffalse
+%\iffalse
 %<*example>
-% \fi
+%\fi
 \begin{lstlisting}
 \begin{tikz-truchet}
   \truchetsquare{b}{w}{b}{w}{b}
@@ -97,9 +97,9 @@
   \truchetsquare[(1.2,-1.2)]{w}{w}{b}{w}{b}
 \end{tikz-truchet}
 \end{lstlisting}
-% \iffalse
+%\iffalse
 %</example>
-% \fi
+%\fi
 % \begin{tikz-truchet}
 %   \truchetsquare{b}{w}{b}{w}{b}
 %   \truchetsquare[(1.2,0)]{w}{b}{w}{b}{w}
@@ -150,17 +150,17 @@
 % 
 % \DescribeMacro{\diagonalsquare}
 % The command \lstinline{\diagonalsquare} can be used to draw a square tile that is half white and half black along a diagonal.
-% \iffalse
+%\iffalse
 %<*example>
-% \fi
+%\fi
 \begin{lstlisting}
 \begin{tikz-truchet}
   \diagonalsquare{x}{w}{x}{b}
 \end{tikz-truchet}
 \end{lstlisting}
-% \iffalse
+%\iffalse
 %</example>
-% \fi 
+%\fi 
 % \begin{tikz-truchet}
 % \diagonalsquare{x}{w}{x}{b}
 % \end{tikz-truchet}
@@ -176,9 +176,9 @@
 % \lstinline{\tileB},
 % \lstinline{\tileC}, and
 % \lstinline{\tileD}.
-% \iffalse
+%\iffalse
 %<*example>
-% \fi
+%\fi
 \begin{lstlisting}
 \begin{tikz-truchet}
   \tileA
@@ -224,10 +224,136 @@
 
 %\fi
 %
+% \section{Hexagons}
+% To draw hexagonal Truchet tiles, you can use the commands \lstinline{\truchethex} and \lstinline{\truchetsplithex}.
+%
+% \DescribeMacro{\truchethex}
+% The command \lstinline{\truchethex} takes 7 inputs: the colour (\lstinline{b} or \lstinline{w}) at the
+% centre, then all the corners starting at the top left and going clockwise. Again an argument can be passed in square
+% brackets to move the tile.
 %\iffalse
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Everything following this has not been tided or documented yet... %
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%<*example>
+%\fi
+\begin{lstlisting}
+\begin{tikz-truchet}
+  \truchethex{b}{w}{b}{w}{b}{w}{b}
+  \truchethex[(2.2,0)]{w}{w}{b}{w}{b}{w}{b}
+\end{tikz-truchet}
+\end{lstlisting}
+%\iffalse
+%</example>
+%\fi 
+% \begin{tikz-truchet}
+%  \truchethex{b}{w}{b}{w}{b}{w}{b}
+%  \truchethex[(2.2,0)]{w}{w}{b}{w}{b}{w}{b}
+% \end{tikz-truchet}
+%
+% \DescribeMacro{\truchetsplithex}
+% The command \lstinline{\truchetsplithex} draws a Truchet tile split in half like the following.
+%\iffalse
+%<*example>
+%\fi
+\begin{lstlisting}
+\begin{tikz-truchet}
+  \truchetsplithex
+\end{tikz-truchet}
+\end{lstlisting}
+%\iffalse
+%</example>
+%\fi 
+% \begin{tikz-truchet}
+%  \truchetsplithex
+% \end{tikz-truchet}
+% 
+% \DescribeEnv{rotatehex}
+% The environment \lstinline{rotatehex} can be used to rotate a hexagonal tile about its centre. The angle should be given in degrees.
+% 
+%\iffalse
+%<*example>
+%\fi
+\begin{lstlisting}
+\begin{tikz-truchet}
+  \begin{rotatehex}{30}
+    \truchetsplithex
+  \end{rotatehex}
+\end{tikz-truchet}
+\end{lstlisting}
+%\iffalse
+%</example>
+%\fi 
+% \begin{tikz-truchet}
+%  \begin{rotatehex}{30}
+%    \truchetsplithex
+%  \end{rotatehex}
+%  \begin{rotatehex}{30}
+%    \truchetsplithex
+%  \end{rotatehex}
+% \end{tikz-truchet}
+% 
+%\iffalse
+\newcommand{\truchetsplithex}[1][(0,0)]{
+  \begin{scope}[shift={#1}]
+    \draw[white,fill=white] (0,0) -- (1,0) -- (1.5,0.866) -- (1,1.732) -- (0,1.732) -- (-0.5,0.866) -- cycle;
+    \draw[black,fill=black] (0,0) -- (.5,0) -- (.5,1.732) -- (0,1.732) -- (-0.5,0.866) -- cycle;
+    \draw [black,fill=black,domain=120:240,line width=1pt] plot ({1.5+0.5*cos(\x)}, {0.866+0.5*sin(\x)}) -- (1.5,0.866) -- cycle;
+    \draw [white,fill=white,domain=-60:60,line width=1pt] plot ({-0.5+0.5*cos(\x)}, {0.866+0.5*sin(\x)}) -- (-0.5,0.866) -- cycle;
+    \draw[black,line width=1pt] (0,0) -- (1,0) -- (1.5,0.866) -- (1,1.732) -- (0,1.732) -- (-0.5,0.866) -- cycle;
+  \end{scope}
+}
+
+\newcommand{\truchethex}[8][(0,0)]{
+  \begin{scope}[shift={#1}]
+    \ifthenelse{\equal{#2}{b}}{
+        \draw[black,fill=black] (0,0) -- (1,0) -- (1.5,0.866) -- (1,1.732) -- (0,1.732) -- (-0.5,0.866) -- cycle;
+    }{
+        \draw[white,fill=white] (0,0) -- (1,0) -- (1.5,0.866) -- (1,1.732) -- (0,1.732) -- (-0.5,0.866) -- cycle;
+    }
+    \ifthenelse{\equal{#3}{#2}}{}{
+        \ifthenelse{\equal{#3}{b}}{
+            \draw [black,fill=black,domain=240:360,line width=1pt] plot ({0.5*cos(\x)}, {1.732+0.5*sin(\x)}) -- (0,1.732) -- cycle;
+        }{
+            \draw [white,fill=white,domain=240:360,line width=1pt] plot ({0.5*cos(\x)}, {1.732+0.5*sin(\x)}) -- (0,1.732) -- cycle;
+        }
+    }
+    \ifthenelse{\equal{#4}{#2}}{}{
+        \ifthenelse{\equal{#4}{b}}{
+            \draw [black,fill=black,domain=180:300,line width=1pt] plot ({1+0.5*cos(\x)}, {1.732+0.5*sin(\x)}) -- (1,1.732) -- cycle;
+        }{
+            \draw [white,fill=white,domain=180:300,line width=1pt] plot ({1+0.5*cos(\x)}, {1.732+0.5*sin(\x)}) -- (1,1.732) -- cycle;
+        }
+    }
+    \ifthenelse{\equal{#5}{#2}}{}{
+        \ifthenelse{\equal{#5}{b}}{
+            \draw [black,fill=black,domain=120:240,line width=1pt] plot ({1.5+0.5*cos(\x)}, {0.866+0.5*sin(\x)}) -- (1.5,0.866) -- cycle;
+        }{
+            \draw [white,fill=white,domain=120:240,line width=1pt] plot ({1.5+0.5*cos(\x)}, {0.866+0.5*sin(\x)}) -- (1.5,0.866) -- cycle;
+        }
+    }
+    \ifthenelse{\equal{#6}{#2}}{}{
+        \ifthenelse{\equal{#6}{b}}{
+            \draw [black,fill=black,domain=60:180,line width=1pt] plot ({1+0.5*cos(\x)}, {0.5*sin(\x)}) -- (1,0) -- cycle;
+        }{
+            \draw [white,fill=white,domain=60:180,line width=1pt] plot ({1+0.5*cos(\x)}, {0.5*sin(\x)}) -- (1,0) -- cycle;
+        }
+    }
+    \ifthenelse{\equal{#7}{#2}}{}{
+        \ifthenelse{\equal{#7}{b}}{
+            \draw [black,fill=black,domain=0:120,line width=1pt] plot ({0.5*cos(\x)}, {0.5*sin(\x)}) -- (0,0) -- cycle;
+        }{
+            \draw [white,fill=white,domain=0:120,line width=1pt] plot ({0.5*cos(\x)}, {0.5*sin(\x)}) -- (0,0) -- cycle;
+        }
+    }
+    \ifthenelse{\equal{#8}{#2}}{}{
+        \ifthenelse{\equal{#8}{b}}{
+            \draw [black,fill=black,domain=-60:60,line width=1pt] plot ({-0.5+0.5*cos(\x)}, {0.866+0.5*sin(\x)}) -- (-0.5,0.866) -- cycle;
+        }{
+            \draw [white,fill=white,domain=-60:60,line width=1pt] plot ({-0.5+0.5*cos(\x)}, {0.866+0.5*sin(\x)}) -- (-0.5,0.866) -- cycle;
+        }
+    }
+    \draw[black,line width=1pt] (0,0) -- (1,0) -- (1.5,0.866) -- (1,1.732) -- (0,1.732) -- (-0.5,0.866) -- cycle;
+  \end{scope}
+}
+
 
 \newenvironment{rotatehex}[1]{
     \begin{scope}[shift={(0.5,0.866)}]
@@ -237,6 +363,42 @@
             \end{scope}
         \end{scope}
     \end{scope}
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Everything following this has not been tided or documented yet... %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% \section{Octagons}
+% 
+
+\newcommand{\octfill}[1][black]{\draw[#1,fill=#1] (0,0) -- (1,0) -- (1.707,0.707) -- (1.707,1.707) -- (1,2.414) -- (0,2.414) -- (-0.707,1.707) -- (-0.707,0.707) -- cycle;}
+\newcommand{\octoutline}[1][black]{\draw[#1,line width=1pt] (0,0) -- (1,0) -- (1.707,0.707) -- (1.707,1.707) -- (1,2.414) -- (0,2.414) -- (-0.707,1.707) -- (-0.707,0.707) -- cycle;}
+\newcommand{\octcirc}[2][black]{
+    \ifthenelse{\equal{#2}{1}}{
+        \draw [#1,fill=#1,domain=225:360,line width=1pt] plot ({0.5*cos(\x)}, {2.414+0.5*sin(\x)}) -- (0,2.414) -- cycle;
+    }{}
+    \ifthenelse{\equal{#2}{2}}{
+        \draw [#1,fill=#1,domain=180:315,line width=1pt] plot ({1+0.5*cos(\x)}, {2.414+0.5*sin(\x)}) -- (1,2.414) -- cycle;
+    }{}
+    \ifthenelse{\equal{#2}{3}}{
+        \draw [#1,fill=#1,domain=135:270,line width=1pt] plot ({1.707+0.5*cos(\x)}, {1.707+0.5*sin(\x)}) -- (1.707,1.707) -- cycle;
+    }{}
+    \ifthenelse{\equal{#2}{4}}{
+        \draw [#1,fill=#1,domain=90:225,line width=1pt] plot ({1.707+0.5*cos(\x)}, {0.707+0.5*sin(\x)}) -- (1.707,0.707) -- cycle;
+    }{}
+    \ifthenelse{\equal{#2}{5}}{
+        \draw [#1,fill=#1,domain=45:180,line width=1pt] plot ({1+0.5*cos(\x)}, {0.5*sin(\x)}) -- (1,0) -- cycle;
+    }{}
+    \ifthenelse{\equal{#2}{6}}{
+        \draw [#1,fill=#1,domain=0:135,line width=1pt] plot ({0.5*cos(\x)}, {0.5*sin(\x)}) -- (0,0) -- cycle;
+    }{}
+    \ifthenelse{\equal{#2}{7}}{
+        \draw [#1,fill=#1,domain=-45:90,line width=1pt] plot ({-0.707+0.5*cos(\x)}, {0.707+0.5*sin(\x)}) -- (-0.707,0.707) -- cycle;
+    }{}
+    \ifthenelse{\equal{#2}{8}}{
+        \draw [#1,fill=#1,domain=-90:45,line width=1pt] plot ({-0.707+0.5*cos(\x)}, {1.707+0.5*sin(\x)}) -- (-0.707,1.707) -- cycle;
+    }{}
 }
 
 \newenvironment{rotateoct}[1]{
@@ -249,6 +411,12 @@
     \end{scope}
 }
 
+
+
+%
+% \section{Decagons}
+% 
+
 \newenvironment{rotatedec}[1]{
     \begin{scope}[shift={(0.5,1.5388417685876261)}]
         \begin{scope}[rotate=#1]
@@ -258,6 +426,10 @@
         \end{scope}
     \end{scope}
 }
+
+%
+% \section{Cubes}
+% 
 
 
 \newcommand{\truchetcube}[6]{
@@ -297,88 +469,6 @@
     \draw[black,line width=1pt] (B) -- (F);
     \draw[black,line width=1pt] (C) -- (G);
     \draw[black,line width=1pt] (D) -- (H);
-}
-
-\newcommand{\octfill}[1][black]{\draw[#1,fill=#1] (0,0) -- (1,0) -- (1.707,0.707) -- (1.707,1.707) -- (1,2.414) -- (0,2.414) -- (-0.707,1.707) -- (-0.707,0.707) -- cycle;}
-\newcommand{\octoutline}[1][black]{\draw[#1,line width=1pt] (0,0) -- (1,0) -- (1.707,0.707) -- (1.707,1.707) -- (1,2.414) -- (0,2.414) -- (-0.707,1.707) -- (-0.707,0.707) -- cycle;}
-\newcommand{\octcirc}[2][black]{
-\ifthenelse{\equal{#2}{1}}{
-    \draw [#1,fill=#1,domain=225:360,line width=1pt] plot ({0.5*cos(\x)}, {2.414+0.5*sin(\x)}) -- (0,2.414) -- cycle;
-}{}
-\ifthenelse{\equal{#2}{2}}{
-    \draw [#1,fill=#1,domain=180:315,line width=1pt] plot ({1+0.5*cos(\x)}, {2.414+0.5*sin(\x)}) -- (1,2.414) -- cycle;
-}{}
-\ifthenelse{\equal{#2}{3}}{
-    \draw [#1,fill=#1,domain=135:270,line width=1pt] plot ({1.707+0.5*cos(\x)}, {1.707+0.5*sin(\x)}) -- (1.707,1.707) -- cycle;
-}{}
-\ifthenelse{\equal{#2}{4}}{
-    \draw [#1,fill=#1,domain=90:225,line width=1pt] plot ({1.707+0.5*cos(\x)}, {0.707+0.5*sin(\x)}) -- (1.707,0.707) -- cycle;
-}{}
-\ifthenelse{\equal{#2}{5}}{
-    \draw [#1,fill=#1,domain=45:180,line width=1pt] plot ({1+0.5*cos(\x)}, {0.5*sin(\x)}) -- (1,0) -- cycle;
-}{}
-\ifthenelse{\equal{#2}{6}}{
-    \draw [#1,fill=#1,domain=0:135,line width=1pt] plot ({0.5*cos(\x)}, {0.5*sin(\x)}) -- (0,0) -- cycle;
-}{}
-\ifthenelse{\equal{#2}{7}}{
-    \draw [#1,fill=#1,domain=-45:90,line width=1pt] plot ({-0.707+0.5*cos(\x)}, {0.707+0.5*sin(\x)}) -- (-0.707,0.707) -- cycle;
-}{}
-\ifthenelse{\equal{#2}{8}}{
-    \draw [#1,fill=#1,domain=-90:45,line width=1pt] plot ({-0.707+0.5*cos(\x)}, {1.707+0.5*sin(\x)}) -- (-0.707,1.707) -- cycle;
-}{}
-}
-
-\newcommand{\truchetsplithex}{
-\draw[white,fill=white] (0,0) -- (1,0) -- (1.5,0.866) -- (1,1.732) -- (0,1.732) -- (-0.5,0.866) -- cycle;
-\draw[black,fill=black] (0,0) -- (.5,0) -- (.5,1.732) -- (0,1.732) -- (-0.5,0.866) -- cycle;
-\draw [black,fill=black,domain=120:240,line width=1pt] plot ({1.5+0.5*cos(\x)}, {0.866+0.5*sin(\x)}) -- (1.5,0.866) -- cycle;
-\draw [white,fill=white,domain=-60:60,line width=1pt] plot ({-0.5+0.5*cos(\x)}, {0.866+0.5*sin(\x)}) -- (-0.5,0.866) -- cycle;
-\draw[black,line width=1pt] (0,0) -- (1,0) -- (1.5,0.866) -- (1,1.732) -- (0,1.732) -- (-0.5,0.866) -- cycle;
-}
-
-\newcommand{\truchethex}[7]{
-\ifthenelse{\equal{#1}{b}}{
-    \draw[black,fill=black] (0,0) -- (1,0) -- (1.5,0.866) -- (1,1.732) -- (0,1.732) -- (-0.5,0.866) -- cycle;
-}{
-    \draw[white,fill=white] (0,0) -- (1,0) -- (1.5,0.866) -- (1,1.732) -- (0,1.732) -- (-0.5,0.866) -- cycle;
-}
-\ifthenelse{\equal{#2}{#1}}{}{
-\ifthenelse{\equal{#2}{b}}{
-    \draw [black,fill=black,domain=240:360,line width=1pt] plot ({0.5*cos(\x)}, {1.732+0.5*sin(\x)}) -- (0,1.732) -- cycle;
-}{
-    \draw [white,fill=white,domain=240:360,line width=1pt] plot ({0.5*cos(\x)}, {1.732+0.5*sin(\x)}) -- (0,1.732) -- cycle;
-}}
-\ifthenelse{\equal{#3}{#1}}{}{
-\ifthenelse{\equal{#3}{b}}{
-    \draw [black,fill=black,domain=180:300,line width=1pt] plot ({1+0.5*cos(\x)}, {1.732+0.5*sin(\x)}) -- (1,1.732) -- cycle;
-}{
-    \draw [white,fill=white,domain=180:300,line width=1pt] plot ({1+0.5*cos(\x)}, {1.732+0.5*sin(\x)}) -- (1,1.732) -- cycle;
-}}
-\ifthenelse{\equal{#4}{#1}}{}{
-\ifthenelse{\equal{#4}{b}}{
-    \draw [black,fill=black,domain=120:240,line width=1pt] plot ({1.5+0.5*cos(\x)}, {0.866+0.5*sin(\x)}) -- (1.5,0.866) -- cycle;
-}{
-    \draw [white,fill=white,domain=120:240,line width=1pt] plot ({1.5+0.5*cos(\x)}, {0.866+0.5*sin(\x)}) -- (1.5,0.866) -- cycle;
-}}
-\ifthenelse{\equal{#5}{#1}}{}{
-\ifthenelse{\equal{#5}{b}}{
-    \draw [black,fill=black,domain=60:180,line width=1pt] plot ({1+0.5*cos(\x)}, {0.5*sin(\x)}) -- (1,0) -- cycle;
-}{
-    \draw [white,fill=white,domain=60:180,line width=1pt] plot ({1+0.5*cos(\x)}, {0.5*sin(\x)}) -- (1,0) -- cycle;
-}}
-\ifthenelse{\equal{#6}{#1}}{}{
-\ifthenelse{\equal{#6}{b}}{
-    \draw [black,fill=black,domain=0:120,line width=1pt] plot ({0.5*cos(\x)}, {0.5*sin(\x)}) -- (0,0) -- cycle;
-}{
-    \draw [white,fill=white,domain=0:120,line width=1pt] plot ({0.5*cos(\x)}, {0.5*sin(\x)}) -- (0,0) -- cycle;
-}}
-\ifthenelse{\equal{#7}{#1}}{}{
-\ifthenelse{\equal{#7}{b}}{
-    \draw [black,fill=black,domain=-60:60,line width=1pt] plot ({-0.5+0.5*cos(\x)}, {0.866+0.5*sin(\x)}) -- (-0.5,0.866) -- cycle;
-}{
-    \draw [white,fill=white,domain=-60:60,line width=1pt] plot ({-0.5+0.5*cos(\x)}, {0.866+0.5*sin(\x)}) -- (-0.5,0.866) -- cycle;
-}}
-\draw[black,line width=1pt] (0,0) -- (1,0) -- (1.5,0.866) -- (1,1.732) -- (0,1.732) -- (-0.5,0.866) -- cycle;
 }
 
 %</truchet>
