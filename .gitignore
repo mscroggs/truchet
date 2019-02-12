@@ -1,0 +1,10 @@
+*.log
+*.pdf
+*.out
+*.aux
+.*.swp
+*.sty
+*.zip
+*.synctex.gz
+tmp
+tmp/*
