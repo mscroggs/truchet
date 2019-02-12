@@ -21,8 +21,8 @@
 %\fi
 
 % \lstinline{truchet} is a package for \LaTeX{} that draws Truchet tiles,
-% as features in the article \emph{Too good to be Truchet} by Colin Beveridge (Chalkdust issue 08,
-% \url{http://chalkdustmagazine.com/features/too-good-to-be-truchet/}).
+% as features in the article \emph{Too good to be Truchet} by Colin Beveridge\footnote{Chalkdust Magazine issue 08, Autumn 2018,
+% \url{http://chalkdustmagazine.com/features/too-good-to-be-truchet/}}.
 %\iffalse
 %<*documentation>
 \documentclass{article}
@@ -48,22 +48,13 @@
 
 \RequirePackage{tikz}
 \RequirePackage{ifthen}
+
 %\fi
-% \DescribeEnv{tikz-truchet}
-% The environment \lstinline{tikz-truchet} is a \lstinline{tikzpicture} that is centred, has small text and the options
-% \lstinline{[line cap=round,line join=round]}. The options \lstinline{x} and \lstinline{y} can be set by passing a value to the
-% environment in square brackets.
-%\iffalse
-\newenvironment{tikz-truchet}[1][2cm]{
-    \begin{center}
-        \begin{tikzpicture}[line cap=round,line join=round,x=#1,y=#1]
-            \begin{small}
-}{
-            \end{small}
-        \end{tikzpicture}
-    \end{center}
-}
-%\fi
+% Before starting, I recommend setting the following tikz options to make your pictures look nicer:
+%\begin{lstlisting}
+\tikzset{x=2cm,y=2cm,line cap=round,line join=round, every picture}
+%\end{lstlisting}
+%
 % \section{Squares}
 % \DescribeMacro{\truchetsquare}
 % You can draw square Truchet tile using the command \lstinline{\truchetsquare}.
@@ -72,16 +63,18 @@
 %<*example>
 %\fi
 \begin{lstlisting}
-\begin{tikz-truchet}
+\begin{tikzpicture}
   \truchetsquare{b}{w}{b}{w}{b}
-\end{tikz-truchet}
+\end{tikzpicture}
 \end{lstlisting}
 %\iffalse
 %</example>
 %\fi
-% \begin{tikz-truchet}
+% \begin{center}
+% \begin{tikzpicture}
 %   \truchetsquare{b}{w}{b}{w}{b}
-% \end{tikz-truchet}
+% \end{tikzpicture}
+% \end{center}
 % The five inputs of the command are the colour (\lstinline{b} or \lstinline{w}) at the centre, the North East, North West, South West,
 % and South East corners (in that order)
 %
@@ -90,22 +83,24 @@
 %<*example>
 %\fi
 \begin{lstlisting}
-\begin{tikz-truchet}
+\begin{tikzpicture}
   \truchetsquare{b}{w}{b}{w}{b}
   \truchetsquare[(1.2,0)]{w}{b}{w}{b}{w}
   \truchetsquare[(0,-1.2)]{b}{b}{w}{b}{w}
   \truchetsquare[(1.2,-1.2)]{w}{w}{b}{w}{b}
-\end{tikz-truchet}
+\end{tikzpicture}
 \end{lstlisting}
 %\iffalse
 %</example>
 %\fi
-% \begin{tikz-truchet}
+% \begin{center}
+% \begin{tikzpicture}
 %   \truchetsquare{b}{w}{b}{w}{b}
 %   \truchetsquare[(1.2,0)]{w}{b}{w}{b}{w}
 %   \truchetsquare[(0,-1.2)]{b}{b}{w}{b}{w}
 %   \truchetsquare[(1.2,-1.2)]{w}{w}{b}{w}{b}
-% \end{tikz-truchet}
+% \end{tikzpicture}
+% \end{center}
 %
 %\iffalse
 \newcommand{\truchetsquare}[6][(0,0)]{
@@ -154,16 +149,18 @@
 %<*example>
 %\fi
 \begin{lstlisting}
-\begin{tikz-truchet}
+\begin{tikzpicture}
   \diagonalsquare{x}{w}{x}{b}
-\end{tikz-truchet}
+\end{tikzpicture}
 \end{lstlisting}
 %\iffalse
 %</example>
 %\fi 
-% \begin{tikz-truchet}
+% \begin{center}
+% \begin{tikzpicture}
 % \diagonalsquare{x}{w}{x}{b}
-% \end{tikz-truchet}
+% \end{tikzpicture}
+% \end{center}
 % The four inputs are the color (\lstinline{w} or \lstinline{b}), or \lstinline{x} if the colour changes at that corner, of
 % the North East, North West, South West, and South East corners (in that order).
 %
@@ -180,22 +177,24 @@
 %<*example>
 %\fi
 \begin{lstlisting}
-\begin{tikz-truchet}
+\begin{tikzpicture}
   \tileA
   \tileB[(1.2,0)]
   \tileC[(2.4,0)]
   \tileD[(3.6,0)]
-\end{tikz-truchet}
+\end{tikzpicture}
 \end{lstlisting}
 %\iffalse
 %</example>
 %\fi 
-% \begin{tikz-truchet}
+% \begin{center}
+% \begin{tikzpicture}
 %  \tileA
 %  \tileB[(1.2,0)]
 %  \tileC[(2.4,0)]
 %  \tileD[(3.6,0)]
-% \end{tikz-truchet}
+% \end{tikzpicture}
+% \end{center}
 % 
 %\iffalse
 \newcommand{\diagonalsquare}[5][(0,0)]{
@@ -235,18 +234,20 @@
 %<*example>
 %\fi
 \begin{lstlisting}
-\begin{tikz-truchet}
+\begin{tikzpicture}
   \truchethex{b}{w}{b}{w}{b}{w}{b}
   \truchethex[(2.2,0)]{w}{w}{b}{w}{b}{w}{b}
-\end{tikz-truchet}
+\end{tikzpicture}
 \end{lstlisting}
 %\iffalse
 %</example>
 %\fi 
-% \begin{tikz-truchet}
+% \begin{center}
+% \begin{tikzpicture}
 %  \truchethex{b}{w}{b}{w}{b}{w}{b}
 %  \truchethex[(2.2,0)]{w}{w}{b}{w}{b}{w}{b}
-% \end{tikz-truchet}
+% \end{tikzpicture}
+% \end{center}
 %
 % \DescribeMacro{\truchetsplithex}
 % The command \lstinline{\truchetsplithex} draws a Truchet tile split in half like the following.
@@ -254,16 +255,18 @@
 %<*example>
 %\fi
 \begin{lstlisting}
-\begin{tikz-truchet}
+\begin{tikzpicture}
   \truchetsplithex
-\end{tikz-truchet}
+\end{tikzpicture}
 \end{lstlisting}
 %\iffalse
 %</example>
 %\fi 
-% \begin{tikz-truchet}
+% \begin{center}
+% \begin{tikzpicture}
 %  \truchetsplithex
-% \end{tikz-truchet}
+% \end{tikzpicture}
+% \end{center}
 % 
 % \DescribeEnv{rotatehex}
 % The environment \lstinline{rotatehex} can be used to rotate a hexagonal tile about its centre. The angle should be given in degrees.
@@ -272,23 +275,25 @@
 %<*example>
 %\fi
 \begin{lstlisting}
-\begin{tikz-truchet}
+\begin{tikzpicture}
   \begin{rotatehex}{30}
     \truchetsplithex
   \end{rotatehex}
-\end{tikz-truchet}
+\end{tikzpicture}
 \end{lstlisting}
 %\iffalse
 %</example>
 %\fi 
-% \begin{tikz-truchet}
+% \begin{center}
+% \begin{tikzpicture}
 %  \begin{rotatehex}{30}
 %    \truchetsplithex
 %  \end{rotatehex}
 %  \begin{rotatehex}{30}
 %    \truchetsplithex
 %  \end{rotatehex}
-% \end{tikz-truchet}
+% \end{tikzpicture}
+% \end{center}
 % 
 %\iffalse
 \newcommand{\truchetsplithex}[1][(0,0)]{
