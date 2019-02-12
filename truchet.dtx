@@ -370,68 +370,6 @@
     \end{scope}
 }
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Everything following this has not been tided or documented yet... %
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%
-% \section{Octagons}
-% 
-
-\newcommand{\octfill}[1][black]{\draw[#1,fill=#1] (0,0) -- (1,0) -- (1.707,0.707) -- (1.707,1.707) -- (1,2.414) -- (0,2.414) -- (-0.707,1.707) -- (-0.707,0.707) -- cycle;}
-\newcommand{\octoutline}[1][black]{\draw[#1,line width=1pt] (0,0) -- (1,0) -- (1.707,0.707) -- (1.707,1.707) -- (1,2.414) -- (0,2.414) -- (-0.707,1.707) -- (-0.707,0.707) -- cycle;}
-\newcommand{\octcirc}[2][black]{
-    \ifthenelse{\equal{#2}{1}}{
-        \draw [#1,fill=#1,domain=225:360,line width=1pt] plot ({0.5*cos(\x)}, {2.414+0.5*sin(\x)}) -- (0,2.414) -- cycle;
-    }{}
-    \ifthenelse{\equal{#2}{2}}{
-        \draw [#1,fill=#1,domain=180:315,line width=1pt] plot ({1+0.5*cos(\x)}, {2.414+0.5*sin(\x)}) -- (1,2.414) -- cycle;
-    }{}
-    \ifthenelse{\equal{#2}{3}}{
-        \draw [#1,fill=#1,domain=135:270,line width=1pt] plot ({1.707+0.5*cos(\x)}, {1.707+0.5*sin(\x)}) -- (1.707,1.707) -- cycle;
-    }{}
-    \ifthenelse{\equal{#2}{4}}{
-        \draw [#1,fill=#1,domain=90:225,line width=1pt] plot ({1.707+0.5*cos(\x)}, {0.707+0.5*sin(\x)}) -- (1.707,0.707) -- cycle;
-    }{}
-    \ifthenelse{\equal{#2}{5}}{
-        \draw [#1,fill=#1,domain=45:180,line width=1pt] plot ({1+0.5*cos(\x)}, {0.5*sin(\x)}) -- (1,0) -- cycle;
-    }{}
-    \ifthenelse{\equal{#2}{6}}{
-        \draw [#1,fill=#1,domain=0:135,line width=1pt] plot ({0.5*cos(\x)}, {0.5*sin(\x)}) -- (0,0) -- cycle;
-    }{}
-    \ifthenelse{\equal{#2}{7}}{
-        \draw [#1,fill=#1,domain=-45:90,line width=1pt] plot ({-0.707+0.5*cos(\x)}, {0.707+0.5*sin(\x)}) -- (-0.707,0.707) -- cycle;
-    }{}
-    \ifthenelse{\equal{#2}{8}}{
-        \draw [#1,fill=#1,domain=-90:45,line width=1pt] plot ({-0.707+0.5*cos(\x)}, {1.707+0.5*sin(\x)}) -- (-0.707,1.707) -- cycle;
-    }{}
-}
-
-\newenvironment{rotateoct}[1]{
-    \begin{scope}[shift={(0.5,1.207)}]
-        \begin{scope}[rotate=#1]
-            \begin{scope}[shift={(-0.5,-1.207)}]
-}{
-            \end{scope}
-        \end{scope}
-    \end{scope}
-}
-
-
-
-%
-% \section{Decagons}
-% 
-
-\newenvironment{rotatedec}[1]{
-    \begin{scope}[shift={(0.5,1.5388417685876261)}]
-        \begin{scope}[rotate=#1]
-            \begin{scope}[shift={(-0.5,-1.5388417685876261)}]
-}{
-            \end{scope}
-        \end{scope}
-    \end{scope}
-}
-
 %\fi
 %
 % \section{Cubes}
