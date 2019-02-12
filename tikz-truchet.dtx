@@ -20,23 +20,23 @@
 %SOFTWARE.
 %\fi
 
-% \lstinline{truchet} is a package for \LaTeX{} that draws Truchet tiles,
+% \lstinline{tikz-truchet} is a package for \LaTeX{} that draws Truchet tiles,
 % as features in the article \emph{Too good to be Truchet} by Colin Beveridge\footnote{Chalkdust Magazine issue 08, Autumn 2018,
 % \url{http://chalkdustmagazine.com/features/too-good-to-be-truchet/}}.
 %\iffalse
 %<*documentation>
 \documentclass{article}
-\usepackage{truchet}
+\usepackage{tikz-truchet}
 \usepackage{doc}
 \usepackage{listings}
 \usepackage{url}
 \usepackage{hyperref}
 \lstset{basicstyle=\ttfamily\footnotesize,commentstyle=\color{red},language=[LaTeX]TeX}
-\title{truchet v\input{VERSION}}
+\title{tikz-truchet v\input{VERSION}}
 \author{Matthew W.~Scroggs}
 \begin{document}
 \maketitle
-    \DocInput{truchet.dtx}
+    \DocInput{tikz-truchet.dtx}
 \end{document}
 %</documentation>
 %\fi
@@ -44,7 +44,7 @@
 %\iffalse
 %<*truchet>
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesPackage{truchet}[2019/02/12 truchet]
+\ProvidesPackage{tikz-truchet}[2019/02/12 tikz-truchet]
 
 \RequirePackage{tikz}
 \RequirePackage{ifthen}
@@ -391,12 +391,14 @@
 %\iffalse
 %</example>
 %\fi 
+% \begin{center}
 % \begin{tikzpicture}[x=1.2cm,y=1.2cm]
 % \truchetcube{w}{w}{w}{w}{w}{w}
 % \truchetcube[(0,-3cm)]{b}{b}{b}{b}{b}{b}
 % \truchetcube[(2.4cm,0)]{w}{w}{w}{w}{w}{b}
 % \truchetcube[(2.4cm,-3cm)]{b}{b}{b}{b}{b}{w}
 % \end{tikzpicture}
+% \end{center}
 %\iffalse
 
 \newcommand{\truchetcube}[7][(0,0)]{
