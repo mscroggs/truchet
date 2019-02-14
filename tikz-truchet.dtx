@@ -49,11 +49,21 @@
 \RequirePackage{tikz}
 \RequirePackage{ifthen}
 
+\newlength{\truchetLineWidth}
+\setlength{\truchetLineWidth}{1pt}
+
 %\fi
+%\tikzset{x=2cm,y=2cm,line cap=round,line join=round, every picture}
 % Before starting, I recommend setting the following tikz options to make your pictures look nicer:
-%\begin{lstlisting}
+%\iffalse
+%<*example>
+%\fi
+\begin{lstlisting}
 \tikzset{x=2cm,y=2cm,line cap=round,line join=round, every picture}
-%\end{lstlisting}
+\end{lstlisting}
+%\iffalse
+%</example>
+%\fi
 %
 % \section{Squares}
 % \DescribeMacro{\truchetsquare}
@@ -138,7 +148,7 @@
             \fill [white,domain=0:90] plot ({0.5*cos(\x)}, {0.5*sin(\x)}) -- (0,0) -- cycle;
         }
     }
-    \draw[black,line width=1pt] (0,0) rectangle (1,1);
+    \draw[black,line width=\truchetLineWidth] (0,0) rectangle (1,1);
   \end{scope}
 }
 %\fi 
@@ -212,7 +222,7 @@
     \ifthenelse{\equal{#5}{b}}{
         \fill [black] (1,0) -- (0,0) -- (0,1) -- cycle;
     }{}
-    \draw[black,line width=1pt] (0,0) rectangle (1,1);
+    \draw[black,line width=\truchetLineWidth] (0,0) rectangle (1,1);
   \end{scope}
 }
 
@@ -302,7 +312,7 @@
     \fill[black] (0,0) -- (.5,0) -- (.5,1.732) -- (0,1.732) -- (-0.5,0.866) -- cycle;
     \fill[black,domain=120:240] plot ({1.5+0.5*cos(\x)}, {0.866+0.5*sin(\x)}) -- (1.5,0.866) -- cycle;
     \fill[white,domain=-60:60] plot ({-0.5+0.5*cos(\x)}, {0.866+0.5*sin(\x)}) -- (-0.5,0.866) -- cycle;
-    \draw[black,line width=1pt] (0,0) -- (1,0) -- (1.5,0.866) -- (1,1.732) -- (0,1.732) -- (-0.5,0.866) -- cycle;
+    \draw[black,line width=\truchetLineWidth] (0,0) -- (1,0) -- (1.5,0.866) -- (1,1.732) -- (0,1.732) -- (-0.5,0.866) -- cycle;
   \end{scope}
 }
 
@@ -315,47 +325,47 @@
     }
     \ifthenelse{\equal{#3}{#2}}{}{
         \ifthenelse{\equal{#3}{b}}{
-            \fill[black,domain=240:360,line width=1pt] plot ({0.5*cos(\x)}, {1.732+0.5*sin(\x)}) -- (0,1.732) -- cycle;
+            \fill[black,domain=240:360] plot ({0.5*cos(\x)}, {1.732+0.5*sin(\x)}) -- (0,1.732) -- cycle;
         }{
-            \fill[white,domain=240:360,line width=1pt] plot ({0.5*cos(\x)}, {1.732+0.5*sin(\x)}) -- (0,1.732) -- cycle;
+            \fill[white,domain=240:360] plot ({0.5*cos(\x)}, {1.732+0.5*sin(\x)}) -- (0,1.732) -- cycle;
         }
     }
     \ifthenelse{\equal{#4}{#2}}{}{
         \ifthenelse{\equal{#4}{b}}{
-            \fill[black,domain=180:300,line width=1pt] plot ({1+0.5*cos(\x)}, {1.732+0.5*sin(\x)}) -- (1,1.732) -- cycle;
+            \fill[black,domain=180:300] plot ({1+0.5*cos(\x)}, {1.732+0.5*sin(\x)}) -- (1,1.732) -- cycle;
         }{
-            \fill[white,domain=180:300,line width=1pt] plot ({1+0.5*cos(\x)}, {1.732+0.5*sin(\x)}) -- (1,1.732) -- cycle;
+            \fill[white,domain=180:300] plot ({1+0.5*cos(\x)}, {1.732+0.5*sin(\x)}) -- (1,1.732) -- cycle;
         }
     }
     \ifthenelse{\equal{#5}{#2}}{}{
         \ifthenelse{\equal{#5}{b}}{
-            \fill[black,domain=120:240,line width=1pt] plot ({1.5+0.5*cos(\x)}, {0.866+0.5*sin(\x)}) -- (1.5,0.866) -- cycle;
+            \fill[black,domain=120:240] plot ({1.5+0.5*cos(\x)}, {0.866+0.5*sin(\x)}) -- (1.5,0.866) -- cycle;
         }{
-            \fill[white,domain=120:240,line width=1pt] plot ({1.5+0.5*cos(\x)}, {0.866+0.5*sin(\x)}) -- (1.5,0.866) -- cycle;
+            \fill[white,domain=120:240] plot ({1.5+0.5*cos(\x)}, {0.866+0.5*sin(\x)}) -- (1.5,0.866) -- cycle;
         }
     }
     \ifthenelse{\equal{#6}{#2}}{}{
         \ifthenelse{\equal{#6}{b}}{
-            \fill[black,domain=60:180,line width=1pt] plot ({1+0.5*cos(\x)}, {0.5*sin(\x)}) -- (1,0) -- cycle;
+            \fill[black,domain=60:180] plot ({1+0.5*cos(\x)}, {0.5*sin(\x)}) -- (1,0) -- cycle;
         }{
-            \fill[white,domain=60:180,line width=1pt] plot ({1+0.5*cos(\x)}, {0.5*sin(\x)}) -- (1,0) -- cycle;
+            \fill[white,domain=60:180] plot ({1+0.5*cos(\x)}, {0.5*sin(\x)}) -- (1,0) -- cycle;
         }
     }
     \ifthenelse{\equal{#7}{#2}}{}{
         \ifthenelse{\equal{#7}{b}}{
-            \fill[black,domain=0:120,line width=1pt] plot ({0.5*cos(\x)}, {0.5*sin(\x)}) -- (0,0) -- cycle;
+            \fill[black,domain=0:120] plot ({0.5*cos(\x)}, {0.5*sin(\x)}) -- (0,0) -- cycle;
         }{
-            \fill[white,domain=0:120,line width=1pt] plot ({0.5*cos(\x)}, {0.5*sin(\x)}) -- (0,0) -- cycle;
+            \fill[white,domain=0:120] plot ({0.5*cos(\x)}, {0.5*sin(\x)}) -- (0,0) -- cycle;
         }
     }
     \ifthenelse{\equal{#8}{#2}}{}{
         \ifthenelse{\equal{#8}{b}}{
-            \fill[black,domain=-60:60,line width=1pt] plot ({-0.5+0.5*cos(\x)}, {0.866+0.5*sin(\x)}) -- (-0.5,0.866) -- cycle;
+            \fill[black,domain=-60:60] plot ({-0.5+0.5*cos(\x)}, {0.866+0.5*sin(\x)}) -- (-0.5,0.866) -- cycle;
         }{
-            \fill[white,domain=-60:60,line width=1pt] plot ({-0.5+0.5*cos(\x)}, {0.866+0.5*sin(\x)}) -- (-0.5,0.866) -- cycle;
+            \fill[white,domain=-60:60] plot ({-0.5+0.5*cos(\x)}, {0.866+0.5*sin(\x)}) -- (-0.5,0.866) -- cycle;
         }
     }
-    \draw[black,line width=1pt] (0,0) -- (1,0) -- (1.5,0.866) -- (1,1.732) -- (0,1.732) -- (-0.5,0.866) -- cycle;
+    \draw[black,line width=\truchetLineWidth] (0,0) -- (1,0) -- (1.5,0.866) -- (1,1.732) -- (0,1.732) -- (-0.5,0.866) -- cycle;
   \end{scope}
 }
 
@@ -433,14 +443,38 @@
     {\fill[black,fill opacity=0.6] (E) -- (F) -- (G) -- (H) -- cycle;}
     {\fill[white,fill opacity=0.6] (E) -- (F) -- (G) -- (H) -- cycle;}
     %edges
-    \draw[black,line width=1pt] (A) -- (B) -- (C) -- (D) -- cycle;
-    \draw[black,line width=1pt] (E) -- (F) -- (G) -- (H) -- cycle;
-    \draw[black,line width=1pt] (A) -- (E);
-    \draw[black,line width=1pt] (B) -- (F);
-    \draw[black,line width=1pt] (C) -- (G);
-    \draw[black,line width=1pt] (D) -- (H);
+    \draw[black,line width=\truchetLineWidth] (A) -- (B) -- (C) -- (D) -- cycle;
+    \draw[black,line width=\truchetLineWidth] (E) -- (F) -- (G) -- (H) -- cycle;
+    \draw[black,line width=\truchetLineWidth] (A) -- (E);
+    \draw[black,line width=\truchetLineWidth] (B) -- (F);
+    \draw[black,line width=\truchetLineWidth] (C) -- (G);
+    \draw[black,line width=\truchetLineWidth] (D) -- (H);
   \end{scope}
 }
 
 %</truchet>
 %\fi
+%\section{options}
+% \DescribeMacro{\truchetLineWidth}
+% The length \lstinline{\truchetLineWidth} is the width of the outlines of the tiles. Its value can be changed
+% to adjust the width of these lines.
+%\iffalse
+%<*example>
+%\fi
+\begin{lstlisting}
+\begin{tikzpicture}
+\setlength{\truchetLineWidth}{0.1pt}
+\truchethex{b}{w}{b}{w}{b}{w}{b}
+\setlength{\truchetLineWidth}{2pt}
+\truchethex[(2.4,0)]{b}{w}{b}{w}{b}{w}{b}
+\end{tikzpicture}
+\end{lstlisting}
+%\iffalse
+%</example>
+%\fi
+%\begin{tikzpicture}
+%\setlength{\truchetLineWidth}{0.1pt}
+%\truchethex{b}{w}{b}{w}{b}{w}{b}
+%\setlength{\truchetLineWidth}{2pt}
+%\truchethex[(2.4,0)]{b}{w}{b}{w}{b}{w}{b}
+%\end{tikzpicture}
